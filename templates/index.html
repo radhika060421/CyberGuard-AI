@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛡️ CyberGuard AI</title>
+
+```
+<style>
+
+    body{
+        font-family: Arial, sans-serif;
+        max-width: 900px;
+        margin: auto;
+        padding: 20px;
+        background: #121212;
+        color: white;
+    }
+
+    h1{
+        text-align: center;
+        color: #60a5fa;
+        margin-bottom: 5px;
+    }
+
+    h3{
+        text-align: center;
+        color: #cbd5e1;
+        margin-bottom: 30px;
+    }
+
+    textarea{
+        width: 100%;
+        height: 250px;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #374151;
+        background: #1f2937;
+        color: white;
+        font-size: 15px;
+        resize: vertical;
+    }
+
+    textarea::placeholder{
+        color: #9ca3af;
+    }
+
+    button{
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 15px;
+        font-size: 16px;
+    }
+
+    button:hover{
+        background: #1d4ed8;
+    }
+
+    .result{
+        margin-top: 25px;
+        background: #1f2937;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 6px solid #ef4444;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        white-space: pre-wrap;
+        color: white;
+    }
+
+    hr{
+        margin-top: 40px;
+        border: 1px solid #374151;
+    }
+
+    .footer{
+        text-align:center;
+        color:gray;
+        margin-top:20px;
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<h1>🛡️ CyberGuard AI</h1>
+<h3>🤖 AI-Powered Email Threat Analyzer</h3>
+
+<form method="POST">
+
+    <textarea
+        name="email"
+        placeholder="📧 Paste suspicious email content here..."
+        required></textarea>
+
+    <br>
+
+    <button type="submit">
+        🔍 Analyze Email
+    </button>
+
+</form>
+
+{% if result %}
+
+<div class="result">
+```
+
+{{ result }} </div>
+
+```
+<br>
+
+<a href="/download">
+    <button>
+        📄 Download PDF Report
+    </button>
+</a>
+
+{% endif %}
+
+<hr>
+
+<div class="footer">
+    🛡️ CyberGuard AI | Flask • Groq • Llama 3.3 • Cybersecurity
+</div>
+```
+
+</body>
+</html>
