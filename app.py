@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 import os
+import re
 
 load_dotenv()
 
@@ -15,11 +16,11 @@ client = Groq(
 
 latest_result = ""
 
+
 @app.route("/", methods=["GET", "POST"])
 def index():
 
     global latest_result
-
     result = ""
 
     if request.method == "POST":
@@ -28,6 +29,12 @@ def index():
 
         prompt = f"""
 You are a cybersecurity expert.
+
+IMPORTANT:
+- Return plain text only.
+- Do NOT use markdown.
+- Do NOT use code blocks.
+- Do NOT wrap output inside ```.
 
 Analyze the email and return ONLY in this format:
 
@@ -66,6 +73,11 @@ Analyze the email and return ONLY in this format:
             )
 
             result = response.choices[0].message.content
+
+            # Remove markdown code blocks if model adds them
+            result = re.sub(r"```[\w]*\n?", "", result)
+            result = result.replace("```", "").strip()
+
             latest_result = result
 
         except Exception as e:
@@ -77,6 +89,8 @@ Analyze the email and return ONLY in this format:
 @app.route("/download")
 def download_pdf():
 
+    global latest_result
+
     if latest_result == "":
         return "No report available. Analyze an email first."
 
@@ -86,8 +100,14 @@ def download_pdf():
     styles = getSampleStyleSheet()
 
     content = [
-        Paragraph("CyberGuard AI Threat Analysis Report", styles["Title"]),
-        Paragraph(latest_result.replace("\n", "<br/>"), styles["BodyText"])
+        Paragraph(
+            "CyberGuard AI Threat Analysis Report",
+            styles["Title"]
+        ),
+        Paragraph(
+            latest_result.replace("\n", "<br/>"),
+            styles["BodyText"]
+        )
     ]
 
     doc.build(content)
